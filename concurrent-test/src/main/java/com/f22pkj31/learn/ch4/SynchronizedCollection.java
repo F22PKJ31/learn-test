@@ -3,6 +3,7 @@ package com.f22pkj31.learn.ch4;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * <p>
@@ -19,10 +20,11 @@ import java.util.List;
  */
 public class SynchronizedCollection {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         List<String> strings = new ArrayList<String>();
         //装饰者模式
         strings = Collections.synchronizedList(strings);
+
     }
 }
