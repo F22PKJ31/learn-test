@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <!-- 控制台输出 -->
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+    <!-- 系统启动日志输出文件 -->
+    <appender name="fileAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/system/system.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+    <!--actionLogEntity appender -->
+    <appender name="actionLogEntityAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/actionlog/dc_actionlogentity.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH-mm"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+    <!--thirdActionLogEntity appender -->
+    <appender name="thirdPartyActionLogEntityAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/thirdparty-actionlog/thirdparty_actionlogentity.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH-mm"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+    <!--dataAccess appender -->
+    <appender name="dataAccessActionLogEntityAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/dataaccess-actionlog/dataaccess_actionlogentity.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH-mm"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+    <appender name="frameworkErrorAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/dc-framework/error/dc-framework_error.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH-mm"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="Error"/>
+        </filter>
+    </appender>
+    <appender name="frameworkDebugAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/dc-framework/debug/dc-framework_debug.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH-mm"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="Debug"/>
+            <param name="LevelMax" value="Debug"/>
+        </filter>
+    </appender>
+
+    <category name="actionLogEntityLogger" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="actionLogEntityAppender"/>
+    </category>
+
+    <category name="thirdPartyActionLogEntityLogger" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="thirdPartyActionLogEntityAppender"/>
+    </category>
+
+    <category name="dataAccessActionLogEntityLogger" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="dataAccessActionLogEntityAppender"/>
+    </category>
+
+    <category name="frameworkLogger" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="frameworkErrorAppender"/>
+        <appender-ref ref="frameworkDebugAppender"/>
+    </category>
+    <!-- ======================================================================================================= -->
+    <!-- =================================SOA server组件日志appender 配置开始======================================= -->
+    <!-- ======================================================================================================= -->
+    <!-- SOA server组件, info级别及以上日志接收器 -->
+    <appender name="soaServerInfoAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${catalina.home}/logs/hotel_soa_server/soa_server_info.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d] %5p [%30.30C:%4.4L] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+    <!-- SOA server组件, error级别及以上日志接收器 -->
+    <appender name="soaServerErrorAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${catalina.home}/logs/hotel_soa_server/soa_server_error.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d] %5p [%30.30C:%4.4L] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+        </filter>
+    </appender>
+    <!-- ======================================================================================================= -->
+    <!-- =================================SOA server组件日志appender 配置开始======================================= -->
+    <!-- ======================================================================================================= -->
+    <!-- ===================================================================================================== -->
+    <!-- =================================SOA server组件日志logger 配置开始======================================= -->
+    <!-- ===================================================================================================== -->
+    <!-- SOA server组件, 通用, 日志器 -->
+    <logger name="soaServerLogger" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="soaServerInfoAppender"/>
+        <appender-ref ref="soaServerErrorAppender"/>
+    </logger>
+
+    <!--&lt;!&ndash; zookeeper日志器, 重定向日志流 &ndash;&gt;-->
+    <!--<logger name="org.apache.zookeeper" additivity="false">-->
+    <!--<level value="INFO" />-->
+    <!--<appender-ref ref="soaServerInfoAppender" />-->
+    <!--<appender-ref ref="soaServerErrorAppender" />-->
+    <!--</logger>-->
+
+    <!--&lt;!&ndash; zookeeper curator日志器, 重定向日志流 &ndash;&gt;-->
+    <!--<logger name="org.apache.curator" additivity="false">-->
+    <!--<level value="INFO" />-->
+    <!--<appender-ref ref="soaServerInfoAppender" />-->
+    <!--<appender-ref ref="soaServerErrorAppender" />-->
+    <!--</logger>-->
+    <!-- ===================================================================================================== -->
+    <!-- =================================SOA server组件日志logger 配置开始======================================= -->
+    <!-- ===================================================================================================== -->
+    <!--源码过滤debug级别日志-->
+    <logger name="org.apache.ibatis" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="stdout"/>
+    </logger>
+
+    <logger name="org.mybatis.spring" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="stdout"/>
+    </logger>
+    <logger name="com.elong.hotel.dc" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="stdout"/>
+    </logger>
+
+    <root>
+        <!--<level value="ERROR" />-->
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
+
+
+    <appender name="OrderStatJobError"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/OrderStatJobManager/statJob_error.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="Error"/>
+        </filter>
+    </appender>
+
+    <appender name="OrderStatJobDebug"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/OrderStatJobManager/statJob_debug.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="Debug"/>
+            <param name="LevelMax" value="Debug"/>
+        </filter>
+    </appender>
+
+    <appender name="OrderMonitorManagerInfoAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/orderMonitorManager/order_monitor_info.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+
+    <appender name="PriceErrorLogInfoAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/PriceErrorLog/PriceErrorLog_info.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+    <appender name="OrderMonitorManagerDebugAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/orderMonitorManager/order_monitor_debug.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMax" value="DEBUG"/>
+        </filter>
+    </appender>
+
+    <appender name="OrderMonitorManagerErrorAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/orderMonitorManager/order_monitor_error.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+    <appender name="SplitInventoryOrderCountInfoLogAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/monitor/split_inventory_order_info.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+
+    <appender name="SplitInventoryOrderCountDebugLogAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/monitor/split_inventory_order_debug.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMax" value="DEBUG"/>
+        </filter>
+    </appender>
+
+    <appender name="SplitInventoryOrderCountErrorLogAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/monitor/split_inventory_order_error.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+    <appender name="QunarAlertLogInfoAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/qunar/qunar_alert_info.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+    <appender name="QunarHotelMappingServiceLogAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/dc-monitor/QunarHotelMappingService/QunarHotelMappingService.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+    <appender name="PushLogServiceLogAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/PushLogService/PushLogService.log"/>
+        <param name="DatePattern" value="'.'yyyyMMdd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+
+
+    <appender name="QunarHotelMappingServiceErrorLogAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File"
+               value="${catalina.home}/logs/dc-monitor/QunarHotelMappingService/QunarHotelMappingServiceError.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+    <appender name="PushLogServiceErrorLogAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/PushLogService/PushLogServiceError.log"/>
+        <param name="DatePattern" value="'.'yyyyMMdd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+    <appender name="QunarAlertLogDebugAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/qunar/qunar_alert_debug.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMax" value="DEBUG"/>
+        </filter>
+    </appender>
+
+    <appender name="QunarAlertLogErrorAppender"
+              class="com.elong.common.util.log.ElongDailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.home}/logs/dc-monitor/qunar/qunar_alert_error.log"/>
+        <param name="DatePattern" value="'.'yyyyMMddHH"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+    <category name="splitinventoryorderLogger" additivity="false">
+        <appender-ref ref="SplitInventoryOrderCountInfoLogAppender"/>
+        <appender-ref ref="SplitInventoryOrderCountErrorLogAppender"/>
+        <appender-ref ref="SplitInventoryOrderCountDebugLogAppender"/>
+    </category>
+    <category name="OrderStatJobManager" additivity="true">
+        <level value="DEBUG"/>
+        <appender-ref ref="OrderStatJobError"/>
+        <appender-ref ref="OrderStatJobDebug"/>
+    </category>
+
+    <category name="OrderMonitorManager" additivity="false">
+        <appender-ref ref="OrderMonitorManagerInfoAppender"/>
+        <appender-ref ref="OrderMonitorManagerDebugAppender"/>
+        <appender-ref ref="OrderMonitorManagerErrorAppender"/>
+    </category>
+    <category name="PriceErrorLog" additivity="false">
+        <appender-ref ref="PriceErrorLogInfoAppender"/>
+    </category>
+
+    <category name="QunarAlertLog" additivity="false">
+        <appender-ref ref="QunarAlertLogInfoAppender"/>
+        <appender-ref ref="QunarAlertLogDebugAppender"/>
+        <appender-ref ref="QunarAlertLogErrorAppender"/>
+    </category>
+    <category name="QunarHotelMappingServiceLog" additivity="false">
+        <appender-ref ref="QunarHotelMappingServiceLogAppender"/>
+        <appender-ref ref="QunarHotelMappingServiceErrorLogAppender"/>
+
+    </category>
+    <category name="PushLogService" additivity="false">
+        <appender-ref ref="PushLogServiceLogAppender"/>
+        <appender-ref ref="PushLogServiceErrorLogAppender"/>
+    </category>
+
+
+    <logger name="abstractRollingFileLogger"
+            additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="SkyNetRollingFileAppender"/>
+    </logger>
+    <appender name="SkyNetRollingFileAppender"
+              class="com.elong.hotel.dc.common.util.rulelog.def.RuleRollingFileAppender">
+        <param name="File" value="${catalina.home}/logs/skynet-mvt.java.hotel.dc.core/app/checkhotel.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+
+</log4j:configuration>
